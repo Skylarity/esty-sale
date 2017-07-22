@@ -1,38 +1,35 @@
 <template>
 	<div class="container">
 		<div class="row">
-			<div class="col-12">
-				<h1>Etsy Sale</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-				<button class="btn btn-outline-success" @click="test">Test</button>
+			<div class="col-md-12">
+				<h1>{{ shop.shop_name }}</h1>
+				<p>{{ shop.title }}</p>
+				<small>by {{ shop.login_name }}</small> &mdash; <icon name="star-o" scale="0.75"></icon> {{ shop.num_favorers }}
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+// Request token URL: '/api/oauth/request_token?scope=profile_r%20shops_rw%20listings_r%20listings_w%20listings_d'
+
 export default {
 	name: 'hello',
-	data () {
+	data() {
 		return {
-			msg: 'Welcome to Your Vue.js App'
+			baseUrl: '/api', //https://openapi.etsy.com/v2
+			apiKey: 'r2hw6d0a6lynsom4rhtqa84t',
+			shop: {}
 		}
 	},
-	methods: {
-		test() {
-			let xmlhttp = new XMLHttpRequest()
-
-			// https://openapi.etsy.com/v2/users/__SELF__/favorites
-			this.$http.get('https://openapi.etsy.com/v2/etsystore?api_key=r2hw6d0a6lynsom4rhtqa84t')
-				.then(response => {
-					console.log(response)
-				}, response => {
-					console.log('error', response)
-				});
-		}
+	mounted() {
+		this.$http.get(this.baseUrl + '/shops/Eqlectica' + '?api_key=' + this.apiKey)
+			.then(response => {
+				this.shop = response.body.results[0]
+				console.log(this.shop)
+			}, response => {
+				console.log('error', response)
+			});
 	}
 }
 </script>
