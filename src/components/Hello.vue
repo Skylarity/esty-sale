@@ -11,6 +11,7 @@
 </template>
 
 <script>
+// https://www.etsy.com/developers/documentation/getting_started/oauth
 // Request token URL: '/api/oauth/request_token?scope=profile_r%20shops_rw%20listings_r%20listings_w%20listings_d'
 
 export default {
